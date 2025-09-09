@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5 pt-5">
+    <h2 class="text-center">Provider Dashboard</h2>
+    
+
+ 
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>User</th>
+                <th>Service</th>
+                <th>Amount</th>
+                <th>Payment Status</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.user_name or 'User #' ~ order.user_id }}</td>
+            <td>{{ order.service_name }}</td>
+            <td>Rs. {{ order.amount or order.service_price }}</td>
+            <td>{{ order.card_last4 or 'N/A' }}</td>
+            <td>{{ order.payment_status or 'Pending' }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.created_at }}</td>
+            <td>
+                {% if order.status != 'Completed' %}
+                <form action="{{ url_for('update_order_status', order_id=order.id) }}" method="POST">
+                    <button type="submit" class="btn btn-sm btn-primary">Mark Completed</button>
+                </form>
+                {% else %}
+                <span class="badge bg-success">Completed</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+    </table>
+</div>
+{% endblock %}

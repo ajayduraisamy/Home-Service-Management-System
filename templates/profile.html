@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <!-- Profile Card -->
+            <div class="card profile-card-premium border-0 shadow-lg mx-auto text-center p-4">
+                <div class="profile-img-container mx-auto mb-4">
+                    {% if user.image_path %}
+                    <img src="{{ url_for('static', filename='profiles/' ~ user.image_path) }}" alt="User Profile Image"
+                        class="profile-img-premium">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='profiles/default.png') }}" alt="Default Profile Image"
+                        class="profile-img-premium">
+                    {% endif %}
+                    <div class="profile-overlay"></div>
+                </div>
+
+                <h4 class="fw-bold mb-3 text-gradient">{{ user.name }}</h4>
+
+                <div class="profile-details">
+                    <div class="detail-item">
+                        <i class="fa fa-envelope fa-fw"></i>
+                        <span class="detail-text">{{ user.email }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fa fa-phone fa-fw"></i>
+                        <span class="detail-text">{{ user.number }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Light Mode Default */
+    .profile-card-premium {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        overflow: hidden;
+        color: #000;
+        position: relative;
+        z-index: 1;
+    }
+
+    .profile-card-premium::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 120px;
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        z-index: -1;
+        border-radius: 0 0 50% 50%;
+        transform: scaleX(1.5);
+    }
+
+    .profile-img-container {
+        position: relative;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        z-index: 2;
+    }
+
+    .profile-img-premium {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .profile-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: linear-gradient(135deg, transparent, rgba(0, 0, 0, 0.1));
+        z-index: 3;
+    }
+
+    .text-gradient {
+        background: linear-gradient(135deg, #333, #666);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .profile-details {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        backdrop-filter: blur(5px);
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .detail-item:last-child {
+        border-bottom: none;
+    }
+
+    .detail-item i {
+        width: 24px;
+        color: #6e8efb;
+        margin-right: 12px;
+    }
+
+    .detail-text {
+        color: #000;
+    }
+
+    /* Dark Mode Styling */
+    body.dark-mode .profile-card-premium {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+        color: #fff;
+    }
+
+    body.dark-mode .profile-card-premium::before {
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+    }
+
+    body.dark-mode .profile-img-premium {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(255, 255, 255, 0.2);
+    }
+
+    body.dark-mode .profile-overlay {
+        background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.2));
+    }
+
+    body.dark-mode .text-gradient {
+        background: linear-gradient(135deg, #fff, #e0e0e0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    body.dark-mode .profile-details {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    body.dark-mode .detail-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .detail-item i {
+        color: #a777e3;
+    }
+
+    body.dark-mode .detail-text {
+        color: #fff;
+    }
+</style>
+
+{% endblock %}

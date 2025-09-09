@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-5 pt-5">
+    <h2 class="mb-4 text-center fw-bold">My Orders</h2>
+
+    {% if orders %}
+    <div class="row g-4">
+        {% for order in orders %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card premium-card shadow-sm h-100">
+                <div class="card-body position-relative">
+                  
+                    {% if order.status == "Completed" %}
+                    <span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-success">
+                        Completed <i class="ms-1 fas fa-check-circle"></i>
+                    </span>
+                    {% endif %}
+
+                   
+                    <h5 class="card-title text-primary">
+                        <i class="fas fa-concierge-bell me-2"></i>{{ order.service_name }}
+                    </h5>
+
+                   
+                    <div class="order-details">
+                        <div class="detail-item">
+                            <i class="fas fa-user-tie me-2 text-secondary"></i>
+                            <span class="fw-medium">Provider:</span> {{ order.provider_name }}
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-tag me-2 text-secondary"></i>
+                            <span class="fw-medium">Price:</span> Rs. {{ order.service_price }}
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-receipt me-2 text-secondary"></i>
+                            <span class="fw-medium">Payment:</span>
+                            <span
+                                class="badge {% if order.payment_status == 'Paid' %}bg-success{% else %}bg-warning{% endif %}">
+                                {{ order.payment_status }}
+                            </span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-tasks me-2 text-secondary"></i>
+                            <span class="fw-medium">Service Status:</span>
+                            <span
+                                class="badge {% if order.status == 'Completed' %}bg-success{% elif order.status == 'In Progress' %}bg-info{% else %}bg-secondary{% endif %}">
+                                {{ order.status }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <!-- Order date -->
+                    <div class="text-muted small">
+                        <i class="far fa-calendar-alt me-1"></i> Booked on: {{ order.created_at }}
+                    </div>
+                </div>
+
+               
+               
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+   
+    <div class="text-center py-5">
+        <div class="empty-state-icon mb-4">
+            <i class="fas fa-shopping-basket fa-4x text-light"></i>
+        </div>
+        <h4 class="text-muted">You have not booked any services yet.</h4>
+        <p class="text-muted">Explore our services and make your first booking!</p>
+        <a href="{{ url_for('index') }}" class="btn btn-primary mt-3">
+            <i class="fas fa-search me-2"></i>Browse Services
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+
+    .premium-card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    }
+
+    .premium-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .premium-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #4e73df, #36b9cc);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+    }
+
+    .premium-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .card-hover-actions {
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .premium-card:hover .card-hover-actions {
+        bottom: 15px;
+        opacity: 1;
+    }
+
+    .detail-item {
+        margin-bottom: 0.6rem;
+    }
+
+    .empty-state-icon {
+        display: inline-block;
+        background: linear-gradient(135deg, #4e73df, #36b9cc);
+        width: 120px;
+        height: 120px;
+        line-height: 120px;
+        border-radius: 50%;
+    }
+
+    /* Badge styling */
+    .badge {
+        font-weight: 500;
+        padding: 0.35em 0.65em;
+    }
+</style>
+
+{% endblock %}

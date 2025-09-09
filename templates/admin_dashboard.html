@@ -1,0 +1,363 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="container mt-5 pt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-gradient">Admin Dashboard</h2>
+        <div class="admin-badge">
+            <i class="fas fa-crown me-2"></i>Administrator
+        </div>
+    </div>
+
+
+    <div class="row mt-4 g-4">
+  
+        <div class="col-md-6 col-lg-3">
+            <div class="premium-stat-card card-orders">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="card-subtitle">Total Orders</h6>
+                            <h3 class="card-value">{{ total_orders }}</h3>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Users Card -->
+        <div class="col-md-6 col-lg-3">
+            <div class="premium-stat-card card-users">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="card-subtitle">Total Users</h6>
+                            <h3 class="card-value">{{ total_users }}</h3>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="col-md-6 col-lg-3">
+            <div class="premium-stat-card card-providers">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="card-subtitle">Total Providers</h6>
+                            <h3 class="card-value">{{ total_providers }}</h3>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="col-md-6 col-lg-3">
+            <div class="premium-stat-card card-revenue">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="card-subtitle">Total Revenue</h6>
+                            <h4 class="card-value mt-5">Rs.{{ total_revenue }}</h4>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions Section -->
+    <div class="mt-5 pt-3">
+        <h4 class="fw-bold mb-4">Quick Actions</h4>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <a href="{{ url_for('admin_create_service') }}" class="premium-action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <h5>Create Service</h5>
+                    <p>Add a new service to the platform</p>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <a href="{{ url_for('view_services') }}" class="premium-action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h5>View Services</h5>
+                    <p>Manage all services</p>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <a href="{{ url_for('admin_users_list') }}" class="premium-action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h5>View Users</h5>
+                    <p>Manage all user accounts</p>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <a href="{{ url_for('admin_providers_list') }}" class="premium-action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h5>View Providers</h5>
+                    <p>Manage service providers</p>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <a href="{{ url_for('admin_orders_list') }}" class="premium-action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h5>View Orders</h5>
+                    <p>Monitor all orders</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Global Styles */
+    .text-gradient {
+        background: linear-gradient(90deg, #4e73df, #36b9cc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .admin-badge {
+        background: linear-gradient(90deg, #ff6b6b, #ff9e7d);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    /* Stat Cards */
+    .premium-stat-card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        position: relative;
+        height: 100%;
+    }
+
+    .premium-stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+    }
+
+    .premium-stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-orders::before {
+        background: linear-gradient(90deg, #4e73df, #5a8dee);
+    }
+
+    .card-users::before {
+        background: linear-gradient(90deg, #1cc88a, #2ecc71);
+    }
+
+    .card-providers::before {
+        background: linear-gradient(90deg, #f6c23e, #f9b64d);
+    }
+
+    .card-revenue::before {
+        background: linear-gradient(90deg, #e74a3b, #ff6b6b);
+    }
+
+    .premium-stat-card .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-subtitle {
+        color: #6e6e6e;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .card-value {
+        font-weight: 700;
+        font-size: 2.2rem;
+        margin-bottom: 0;
+        color: #2e3a59;
+    }
+
+    .stat-icon {
+        background: rgba(255, 255, 255, 0.2);
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .card-orders .stat-icon {
+        background: rgba(78, 115, 223, 0.15);
+        color: #4e73df;
+    }
+
+    .card-users .stat-icon {
+        background: rgba(28, 200, 138, 0.15);
+        color: #1cc88a;
+    }
+
+    .card-providers .stat-icon {
+        background: rgba(246, 194, 62, 0.15);
+        color: #f6c23e;
+    }
+
+    .card-revenue .stat-icon {
+        background: rgba(231, 74, 59, 0.15);
+        color: #e74a3b;
+    }
+
+    .card-growth {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .card-orders .card-growth {
+        color: #4e73df;
+    }
+
+    .card-users .card-growth {
+        color: #1cc88a;
+    }
+
+    .card-providers .card-growth {
+        color: #f6c23e;
+    }
+
+    .card-revenue .card-growth {
+        color: #e74a3b;
+    }
+
+    /* Action Cards */
+    .premium-action-card {
+        display: block;
+        background: white;
+        border-radius: 16px;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+        color: inherit;
+        text-decoration: none;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .premium-action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .action-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.2rem;
+        font-size: 2rem;
+        transition: all 0.3s ease;
+    }
+
+    .premium-action-card:nth-child(1) .action-icon {
+        background: rgba(78, 115, 223, 0.15);
+        color: #4e73df;
+    }
+
+    .premium-action-card:nth-child(2) .action-icon {
+        background: rgba(28, 200, 138, 0.15);
+        color: #1cc88a;
+    }
+
+    .premium-action-card:nth-child(3) .action-icon {
+        background: rgba(246, 194, 62, 0.15);
+        color: #f6c23e;
+    }
+
+    .premium-action-card:nth-child(4) .action-icon {
+        background: rgba(231, 74, 59, 0.15);
+        color: #e74a3b;
+    }
+
+    .premium-action-card h5 {
+        font-weight: 700;
+        margin-bottom: 0.7rem;
+        color: #2e3a59;
+    }
+
+    .premium-action-card p {
+        color: #6e6e6e;
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .card-value {
+            font-size: 1.8rem;
+        }
+
+        .premium-action-card {
+            padding: 1.5rem 1rem;
+        }
+
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.7rem;
+        }
+    }
+</style>
+
+{% endblock %}

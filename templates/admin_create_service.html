@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Add Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+          
+            <div class="text-center mb-5">
+                <div class="create-service-icon mb-3">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <h1 class="fw-bold text-gradient">Create New Service</h1>
+                <p class="text-muted">Add a new service to your platform portfolio</p>
+                <div class="header-divider mx-auto"></div>
+            </div>
+{% for message in get_flashed_messages() %}
+<div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
+    <i class="bi bi-check-circle-fill me-2"></i>
+    <div>{{ message }}</div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+           
+            <div class="premium-form-card shadow-lg">
+                <form method="POST" class="p-4 p-md-5" enctype="multipart/form-data">
+                   
+                    <div class="form-floating mb-4">
+                        <select class="form-select premium-select" id="name" name="name" required>
+                            <option value="" disabled selected>Select a service</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Carpentry">Carpentry</option>
+                            <option value="Cleaning">Cleaning</option>
+                            <option value="Painting">Painting</option>
+                            <option value="Pest Control">Pest Control</option>
+                            <option value="Gardening">Gardening</option>
+                            <option value="AC Repair">AC Repair</option>
+                            <option value="Appliance Repair">Appliance Repair</option>
+                            <option value="Home Security">Home Security</option>
+                            <option value="Roofing">Roofing</option>
+                            <option value="Flooring">Flooring</option>
+                            <option value="Plastering">Plastering</option>
+                            <option value="Window Cleaning">Window Cleaning</option>
+                            <option value="Laundry Services">Laundry Services</option>
+                            <option value="Home Theater Installation">Home Theater Installation</option>
+                            <option value="Furniture Assembly">Furniture Assembly</option>
+                            <option value="Water Tank Cleaning">Water Tank Cleaning</option>
+                            <option value="Car Wash at Home">Car Wash at Home</option>
+                            <option value="Electrical Appliance Installation">Electrical Appliance Installation</option>
+                            <option value="Interior Design">Interior Design</option>
+                        </select>
+                        <label for="name" class="form-label">
+                            <i class="fas fa-tag me-2"></i>Service Name
+                        </label>
+                        <div class="form-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+
+                    
+                    <div class="mb-4">
+                        <label for="description" class="form-label mb-3">
+                            <i class="fas fa-align-left me-2"></i>Description
+                        </label>
+                        <textarea class="form-control premium-textarea" id="description" name="description" rows="4"
+                            placeholder="Describe the service in detail..." required></textarea>
+                        <div class="form-text">Provide a clear description of what the service includes</div>
+                    </div>
+
+                   <div class="mb-4">
+                    <label for ="file" class="form-label mb-3">
+                        <i class="fas fa-image me-2"></i>Image File
+                    </label>
+                    <input type="file" class="form-control premium-input" id="file" name="file"
+                        placeholder="Upload image file" required>
+
+                    <div class="form-text">Provide a valid URL for the service image</div>
+               
+                   </div>
+                    <div class="form-floating mb-4">
+                        <select class="form-select premium-select" id="provider_id" name="provider_id" required>
+                            {% for provider in providers %}
+                            <option value="{{ provider.id }}">{{ provider.name }} {% if provider.specialization %}- {{
+                                provider.specialization }}{% endif %}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="provider_id" class="form-label">
+                            <i class="fas fa-user-tie me-2"></i>Assign to Provider
+                        </label>
+                        <div class="form-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+
+                   
+                    <div class="form-floating mb-4">
+                        <input type="number" class="form-control premium-input" id="price" name="price" step="0.01"
+                            placeholder="Service Price" required>
+                        <label for="price" class="form-label">
+                            <i class="fas fas fa-rupee-sign me-2"></i>Service Price
+                        </label>
+                        <div class="form-icon">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                    </div>
+
+                   
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-premium rounded-pill">
+                            <span class="btn-text">Create Service</span>
+                            <div class="btn-icon">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    .premium-form-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .premium-form-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #4e73df, #36b9cc, #1cc88a);
+    }
+
+    .create-service-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4e73df, #36b9cc);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        color: white;
+        font-size: 2rem;
+    }
+
+    .text-gradient {
+        background: linear-gradient(90deg, #4e73df, #36b9cc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .header-divider {
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #4e73df, #36b9cc);
+        border-radius: 3px;
+        margin-top: 15px;
+    }
+
+    /* Form Elements Styling */
+    .form-floating {
+        position: relative;
+    }
+
+    .form-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c757d;
+        transition: all 0.3s;
+        pointer-events: none;
+    }
+
+    .premium-select,
+    .premium-input,
+    .premium-textarea {
+        border-radius: 12px;
+        padding: 16px 20px;
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s;
+        background-color: #fff;
+    }
+
+    .premium-select:focus,
+    .premium-input:focus,
+    .premium-textarea:focus {
+        box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.15);
+        border-color: #4e73df;
+    }
+
+    .premium-select:focus~.form-icon,
+    .premium-input:focus~.form-icon {
+        color: #4e73df;
+    }
+
+    .premium-textarea {
+        min-height: 120px;
+        resize: none;
+    }
+
+    .form-label {
+        display: flex;
+        align-items: center;
+        color: #6c757d;
+        font-weight: 500;
+    }
+
+    .form-text {
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-top: 8px;
+    }
+
+    /* Button Styling */
+    .btn-premium {
+        position: relative;
+        padding: 14px 35px;
+        font-weight: 600;
+        background: linear-gradient(90deg, #4e73df, #36b9cc);
+        border: none;
+        color: white;
+        overflow: hidden;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-premium:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(78, 115, 223, 0.2);
+        color: white;
+    }
+
+    .btn-premium:active {
+        transform: translateY(0);
+    }
+
+    .btn-icon {
+        transition: transform 0.3s;
+    }
+
+    .btn-premium:hover .btn-icon {
+        transform: rotate(90deg);
+    }
+
+    /* Floating label adjustments */
+    .form-floating>label {
+        padding-left: 45px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-floating>.form-control {
+        padding-left: 45px;
+    }
+
+    /* Select dropdown styling */
+    .form-select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%236c757d' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 16px 12px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .premium-form-card {
+            padding: 20px !important;
+        }
+
+        .btn-premium {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+{% endblock %}

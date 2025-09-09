@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Add Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="container py-5">
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+        <div class="header-icon mb-3">
+            <i class="fas fa-user-tie"></i>
+        </div>
+        <h1 class="fw-bold text-gradient">Providers List</h1>
+        <p class="text-muted">All service providers in the system</p>
+        <div class="header-divider mx-auto"></div>
+    </div>
+{% for message in get_flashed_messages() %}
+<div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
+    <i class="bi bi-check-circle-fill me-2"></i>
+    <div>{{ message }}</div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+    <!-- Providers Table -->
+    <div class="premium-table-card shadow-lg">
+        <div class="table-container">
+            <table class="premium-table">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="table-header-cell">
+                                <i class="fas fa-id-card me-2"></i>ID
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header-cell">
+                                <i class="fas fa-user me-2"></i>Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header-cell">
+                                <i class="fas fa-envelope me-2"></i>Email
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header-cell">
+                                <i class="fas fa-phone me-2"></i>Phone
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header-cell">
+                                <i class="fas fa-tools me-2"></i>Specialization
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header-cell">
+                                <i class="fas fa-cog me-2"></i>Actions
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for provider in providers %}
+                    <tr>
+                        <td><span class="provider-id">#{{ provider.id }}</span></td>
+                        <td>
+                            <div class="provider-info">
+                                <div class="provider-avatar">
+                                    {{ provider.name[0]|upper }}
+                                </div>
+                                <span class="provider-name">{{ provider.name }}</span>
+                            </div>
+                        </td>
+                        <td>{{ provider.email }}</td>
+                        <td>{{ provider.number }}</td>
+                        <td>
+                            <span class="specialization-badge">{{ provider.specialization }}</span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="{{ url_for('admin_edit_provider', provider_id=provider.id) }}"
+                                    class="btn-action edit" title="Edit Provider">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ url_for('admin_delete_provider', provider_id=provider.id) }}"
+                                    class="btn-action delete" title="Delete Provider"
+                                    onclick="return confirm('Are you sure you want to delete this provider?');">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Premium Table Styling */
+    .premium-table-card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .table-container {
+        padding: 0;
+    }
+
+    .premium-table {
+        width: 80%;
+        border-collapse: collapse;
+        margin: 0;
+    }
+
+    .premium-table th {
+        background: linear-gradient(135deg, #4e73df 0%, #5a8dee 100%);
+        padding: 10px 15px;
+        color: white;
+        font-weight: 600;
+        text-align: left;
+    }
+
+    .premium-table td {
+        padding: 16px 20px;
+        border-bottom: 1px solid #f1f3f9;
+    }
+
+    .premium-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .premium-table tr:hover {
+        background-color: #f8f9fc;
+    }
+
+    .table-header-cell {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Provider Info Styling */
+    .provider-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .provider-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4e73df, #36b9cc);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .provider-name {
+        font-weight: 500;
+        color: #2d3748;
+    }
+
+    .provider-id {
+        font-weight: 600;
+        color: #4e73df;
+    }
+
+    /* Specialization Badge */
+    .specialization-badge {
+        background: rgba(28, 200, 138, 0.15);
+        color: #1cc88a;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn-action {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+    .btn-action.edit {
+        background: rgba(78, 115, 223, 0.1);
+        color: #4e73df;
+    }
+
+    .btn-action.delete {
+        background: rgba(231, 74, 59, 0.1);
+        color: #e74a3b;
+    }
+
+    .btn-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Header Styling */
+    .header-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4e73df, #36b9cc);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        color: white;
+        font-size: 2rem;
+    }
+
+    .text-gradient {
+        background: linear-gradient(90deg, #4e73df, #36b9cc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .header-divider {
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #4e73df, #36b9cc);
+        border-radius: 3px;
+        margin-top: 15px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .premium-table {
+            display: block;
+            overflow-x: auto;
+        }
+
+        .provider-info {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .header-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+    }
+</style>
+
+{% endblock %}
